@@ -4,7 +4,7 @@
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
  * 
- *     http://www.apache.org/licenses/LICENSE-2.0
+ *	 http://www.apache.org/licenses/LICENSE-2.0
  * 
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
@@ -20,8 +20,8 @@ import de.vandermeer.asciitable.commons.TablePair;
 /**
  * ASCII and UTF-8 box drawing characters.
  *
- * @author     Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
- * @version    v0.0.2 build 140626 (26-Jun-14) with Java 1.8
+ * @author	 Sven van der Meer &lt;vdmeer.sven@mykolab.com&gt;
+ * @version	v0.0.2 build 140626 (26-Jun-14) with Java 1.8
  */
 public enum CharactersBoxDrawing implements TablePair<Character, Character> {
 
@@ -214,7 +214,56 @@ public enum CharactersBoxDrawing implements TablePair<Character, Character> {
 
 	;
 
-	/** The actual character, requires UTF-8 capabilities to use */
+	private final class TablePairImplementation implements TablePair<Character, Character>
+    {
+        private final String description;
+        private final Character rhs;
+        private final Character lhs;
+
+        private TablePairImplementation(String description, Character rhs, Character lhs)
+        {
+            this.description = description;
+            this.rhs = rhs;
+            this.lhs = lhs;
+        }
+
+        @Override
+        public TablePair<Character, Character> create(Character lhs, Character rhs) {
+            return create(lhs, rhs, "abstract IsPath implementation");
+        }
+
+        @Override
+        public TablePair<Character, Character> create(final Character lhs, final Character rhs, final String description) {
+            return new TablePairImplementation(description, rhs, lhs);
+        }
+
+        @Override
+        public Character rhs() {
+        	return rhs;
+        }
+
+        @Override
+        public Character right() {
+        	return rhs;
+        }
+
+        @Override
+        public Character lhs() {
+        	return lhs;
+        }
+
+        @Override
+        public Character left() {
+        	return lhs;
+        }
+
+        @Override
+        public String getDescription() {
+        	return description;
+        }
+    }
+
+    /** The actual character, requires UTF-8 capabilities to use */
 	public final char character;
 
 	/** The character as an UTF escape */
@@ -252,6 +301,16 @@ public enum CharactersBoxDrawing implements TablePair<Character, Character> {
 	@Override
 	public Character rhs() {
 		return this.utf;
+	}
+
+	@Override
+	public TablePair<Character, Character> create(Character lhs, Character rhs) {
+		return create(lhs, rhs, "abstract IsPath implementation");
+	}
+
+	@Override
+	public TablePair<Character, Character> create(final Character lhs, final Character rhs, final String description) {
+		return new TablePairImplementation(description, rhs, lhs);
 	}
 
 	@Override

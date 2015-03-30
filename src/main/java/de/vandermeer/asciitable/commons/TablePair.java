@@ -61,9 +61,7 @@ public interface TablePair<LHS, RHS> {
 	 * @param lhs left hand side of the pair
 	 * @return new pair
 	 */
-	static <LHS, RHS> TablePair<LHS, RHS> create(LHS lhs, RHS rhs){
-		return TablePair.create(lhs, rhs, "abstract IsPath implementation");
-	}
+    TablePair<LHS, RHS> create(LHS lhs, RHS rhs);
 
 	/**
 	 * Returns a new Pair of given type with given description.
@@ -74,32 +72,5 @@ public interface TablePair<LHS, RHS> {
 	 * @param description description of the pair
 	 * @return new pair
 	 */
-	static <LHS, RHS> TablePair<LHS, RHS> create(final LHS lhs, final RHS rhs, final String description){
-		return new TablePair<LHS, RHS> (){
-			@Override
-			public RHS rhs() {
-				return rhs;
-			}
-
-			@Override
-			public RHS right() {
-				return rhs;
-			}
-
-			@Override
-			public LHS lhs() {
-				return lhs;
-			}
-
-			@Override
-			public LHS left() {
-				return lhs;
-			}
-
-			@Override
-			public String getDescription() {
-				return description;
-			}
-		};
-	}
+    TablePair<LHS, RHS> create(final LHS lhs, final RHS rhs, final String description);
 }
